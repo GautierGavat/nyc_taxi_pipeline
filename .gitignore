@@ -1,0 +1,10 @@
+# dbt
+logs/
+target/
+dbt_packages/
+modules/
+
+# Environnement
+.env
+profiles.yml
+*.pyc
