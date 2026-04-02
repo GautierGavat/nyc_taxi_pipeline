@@ -7,6 +7,8 @@ on:
 jobs:
   run_dbt:
     runs-on: ubuntu-latest
+    
+    # ON PLACE LES SECRETS ICI POUR QU'ILS SOIENT VISIBLES PAR TOUTES LES ÉTAPES
     env:
       DBT_SNOWFLAKE_ACCOUNT: ${{ secrets.SNOWFLAKE_ACCOUNT }}
       DBT_SNOWFLAKE_USER: ${{ secrets.SNOWFLAKE_USER }}
@@ -17,10 +19,10 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4 # Version plus récente
+        uses: actions/checkout@v4
 
       - name: Set up Python
-        uses: actions/setup-python@v5 # Version plus récente
+        uses: actions/setup-python@v5
         with:
           python-version: '3.11'
 
@@ -29,8 +31,7 @@ jobs:
           pip install dbt-snowflake
 
       - name: Debug Connection
-        run: |
-          dbt debug --profiles-dir . --target dev
+        run: dbt debug --profiles-dir . --target dev
 
       - name: Run dbt
         run: |

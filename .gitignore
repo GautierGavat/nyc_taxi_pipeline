@@ -6,5 +6,4 @@ modules/
 
 # Environnement
 .env
-profiles.yml
 *.pyc
