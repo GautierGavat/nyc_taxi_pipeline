@@ -9,6 +9,14 @@ Ce projet met en place un pipeline **ELT (Extract, Load, Transform)** moderne po
 
 ---
 
+## 📊 Aperçu du Dashboard (Snowflake)
+
+### Analyse des Volumes et Revenus
+![Evolution des trajets et Revenu Total](./Graph/dashboard_1.png)
+
+### Analyse de la Rentabilité et des Zones
+![Top Zones et Rentabilité Horaire](./Graph/dashboard_2.png)
+
 ## 🏗️ Architecture du Projet 
 
 Le projet suit une architecture en couches pour garantir la qualité, la modularité et la traçabilité des données :
