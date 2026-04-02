@@ -1,3 +1,5 @@
+[![dbt_snowflake_pipeline](https://github.com/GautierGavat/nyc_taxi_pipeline/actions/workflows/dbt_run.yml/badge.svg)](https://github.com/GautierGavat/nyc_taxi_pipeline/actions/workflows/dbt_run.yml)
+
 # NYC Taxi Pipeline - dbt & Snowflake 🚕
 
 Ce projet transforme les données brutes des taxis New-Yorkais (025) en tables analytiques exploitables.
