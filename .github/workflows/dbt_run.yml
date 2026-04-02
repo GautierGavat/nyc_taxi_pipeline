@@ -2,38 +2,37 @@ name: dbt_snowflake_pipeline
 
 on:
   push:
-    branches:
-      - main
-  schedule:
-    - cron: '0 0 1 * *' # Se lance le 1er de chaque mois à minuit
+    branches: [ main ]
 
 jobs:
   run_dbt:
     runs-on: ubuntu-latest
+    env:
+      DBT_SNOWFLAKE_ACCOUNT: ${{ secrets.SNOWFLAKE_ACCOUNT }}
+      DBT_SNOWFLAKE_USER: ${{ secrets.SNOWFLAKE_USER }}
+      DBT_SNOWFLAKE_PW: ${{ secrets.SNOWFLAKE_PASSWORD }}
+      DBT_SNOWFLAKE_ROLE: ${{ secrets.SNOWFLAKE_ROLE }}
+      DBT_SNOWFLAKE_WH: ${{ secrets.SNOWFLAKE_WAREHOUSE }}
+      DBT_SNOWFLAKE_DB: ${{ secrets.SNOWFLAKE_DATABASE }}
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4 # Version plus récente
 
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5 # Version plus récente
         with:
-          python-version: '3.9'
+          python-version: '3.11'
 
       - name: Install dependencies
         run: |
           pip install dbt-snowflake
 
-      - name: Run dbt
-        env:
-          # On passe les secrets GitHub aux variables d'environnement
-          DBT_SNOWFLAKE_ACCOUNT: ${{ secrets.SNOWFLAKE_ACCOUNT }}
-          DBT_SNOWFLAKE_USER: ${{ secrets.SNOWFLAKE_USER }}
-          DBT_SNOWFLAKE_PW: ${{ secrets.SNOWFLAKE_PASSWORD }}
-          DBT_SNOWFLAKE_ROLE: ${{ secrets.SNOWFLAKE_ROLE }}
-          DBT_SNOWFLAKE_WH: ${{ secrets.SNOWFLAKE_WAREHOUSE }}
-          DBT_SNOWFLAKE_DB: ${{ secrets.SNOWFLAKE_DATABASE }}
+      - name: Debug Connection
         run: |
-          # dbt utilise ces variables pour se connecter
+          dbt debug --profiles-dir . --target dev
+
+      - name: Run dbt
+        run: |
           dbt run --profiles-dir . --target dev
           dbt test --profiles-dir . --target dev
