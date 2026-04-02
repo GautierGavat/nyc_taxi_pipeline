@@ -3,12 +3,13 @@ name: dbt_snowflake_pipeline
 on:
   push:
     branches: [ main ]
+  schedule:
+    - cron: '0 6 1 * *'  # Le 1er de chaque mois à 6h UTC (refresh mensuel des données NYC TLC)
 
 jobs:
   run_dbt:
     runs-on: ubuntu-latest
-    
-    # ON PLACE LES SECRETS ICI POUR QU'ILS SOIENT VISIBLES PAR TOUTES LES ÉTAPES
+
     env:
       DBT_SNOWFLAKE_ACCOUNT: ${{ secrets.SNOWFLAKE_ACCOUNT }}
       DBT_SNOWFLAKE_USER: ${{ secrets.SNOWFLAKE_USER }}
@@ -27,13 +28,13 @@ jobs:
           python-version: '3.11'
 
       - name: Install dependencies
-        run: |
-          pip install dbt-snowflake
+        run: pip install dbt-snowflake
 
-      - name: Debug Connection
+      - name: Debug connection
         run: dbt debug --profiles-dir . --target dev
 
-      - name: Run dbt
-        run: |
-          dbt run --profiles-dir . --target dev
-          dbt test --profiles-dir . --target dev
+      - name: Run dbt models
+        run: dbt run --profiles-dir . --target dev
+
+      - name: Run dbt tests
+        run: dbt test --profiles-dir . --target dev
