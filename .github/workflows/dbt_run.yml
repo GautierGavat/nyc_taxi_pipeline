@@ -4,7 +4,7 @@ on:
   push:
     branches: [ main ]
   schedule:
-    - cron: '0 6 1 * *'  # Le 1er de chaque mois à 6h UTC (refresh mensuel des données NYC TLC)
+    - cron: '0 6 1 * *'  # Le 1er de chaque mois à 6h UTC
 
 jobs:
   run_dbt:
@@ -28,7 +28,14 @@ jobs:
           python-version: '3.11'
 
       - name: Install dependencies
-        run: pip install dbt-snowflake
+        run: |
+          pip install dbt-snowflake
+          pip install -r ingestion/requirements.txt
+
+      - name: Ingest latest data
+        run: python ingestion/load_to_snowflake.py
+        # Ne tourne qu'en cron (pas sur chaque push)
+        if: github.event_name == 'schedule'
 
       - name: Debug connection
         run: dbt debug --profiles-dir . --target dev

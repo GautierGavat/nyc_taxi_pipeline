@@ -3,6 +3,8 @@ logs/
 target/
 dbt_packages/
 modules/
+.user.yml
+profiles.yml
 
 # Environnement
 .env
