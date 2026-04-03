@@ -15,18 +15,12 @@ clean-targets:
   - "dbt_packages"
 
 models:
-  nyc_taxi_project:      # ← ce niveau est obligatoire
+  nyc_taxi_project:
     staging:
-      +schema: STAGING
       +materialized: view
-      +tags: ["staging"]
-
+      +schema: STAGING
     intermediate:
-      +schema: INTERMEDIATE
       +materialized: ephemeral
-      +tags: ["intermediate"]
-
     marts:
-      +schema: MARTS
       +materialized: table
-      +tags: ["mart"]         
+      +schema: MARTS   

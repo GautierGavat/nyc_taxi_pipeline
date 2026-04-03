@@ -2,7 +2,28 @@ version: 2
 
 sources:
   - name: nyc_taxi_raw
+    description: "Données brutes NYC Yellow Taxi ingérées depuis les fichiers Parquet TLC."
     database: NYC_TAXI_DB
     schema: RAW
     tables:
       - name: RAW
+        description: "Table brute contenant les trajets Yellow Taxi 2024-2025 (~40M lignes)."
+        columns:
+          - name: VendorID
+            description: "Fournisseur TPEP (1 = CMT, 2 = VeriFone)."
+          - name: tpep_pickup_datetime
+            description: "Horodatage de prise en charge."
+            tests:
+              - not_null
+          - name: tpep_dropoff_datetime
+            description: "Horodatage de dépose."
+            tests:
+              - not_null
+          - name: trip_distance
+            description: "Distance en miles."
+            tests:
+              - not_null
+          - name: fare_amount
+            description: "Montant de base de la course."
+          - name: total_amount
+            description: "Montant total payé."

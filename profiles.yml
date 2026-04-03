@@ -9,5 +9,5 @@ nyc_taxi_project:
       warehouse: "{{ env_var('DBT_SNOWFLAKE_WH') }}"
       database: "{{ env_var('DBT_SNOWFLAKE_DB') }}"
       schema: STAGING
-      threads: 1
+      threads: 4
   target: dev

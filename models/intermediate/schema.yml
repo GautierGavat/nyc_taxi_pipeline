@@ -1,0 +1,16 @@
+version: 2
+
+models:
+  - name: int_trip_metrics
+    description: "Métriques calculées par trajet : durée, vitesse, taux de pourboire, catégories."
+    columns:
+      - name: trip_duration_minutes
+        description: "Durée du trajet en minutes."
+      - name: avg_speed_mph
+        description: "Vitesse moyenne en miles/heure."
+      - name: tip_rate
+        description: "Ratio pourboire / fare_amount."
+      - name: distance_category
+        description: "Court (< 2mi), Moyen (2-10mi), Long (> 10mi)."
+      - name: time_of_day
+        description: "Rush Matinal, Journée, Rush Soir, Nuit."

@@ -1,0 +1,26 @@
+version: 2
+
+models:
+  - name: stg_yellow_taxi_trips
+    description: "Données brutes NYC Yellow Taxi nettoyées — filtres qualité appliqués."
+    columns:
+      - name: vendorid
+        description: "Identifiant du fournisseur TPEP (1 = CMT, 2 = VeriFone)."
+      - name: pickup_datetime
+        description: "Horodatage de prise en charge."
+        tests:
+          - not_null
+      - name: dropoff_datetime
+        description: "Horodatage de dépose."
+        tests:
+          - not_null
+      - name: trip_distance
+        description: "Distance en miles. Filtré : 0 < distance < 100."
+        tests:
+          - not_null
+      - name: fare_amount
+        description: "Montant de la course. Filtré : valeurs négatives exclues."
+        tests:
+          - not_null
+      - name: total_amount
+        description: "Montant total payé."
